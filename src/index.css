@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Caesar+Dressing&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Inter+Tight:ital,wght@0,100..900;1,100..900&family=Mea+Culpa&family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+.font-serif-elegant {
+  font-family: 'Cormorant Garamond', serif;
+}
+.font-sans-clean {
+  font-family: 'Montserrat', sans-serif;
+}
+.Inter{
+    font-family: "Inter Tight", sans-serif;
+}
+.Styled{
+        font-family: "Mea Culpa", cursive;
+}
+.font-admin {
+    font-family: 'Outfit', sans-serif;
+}
+@import "tailwindcss";
