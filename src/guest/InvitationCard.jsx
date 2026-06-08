@@ -3,14 +3,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger);
-
-/* ─── Fonts ─────────────────────────────────────────────────── */
 const GlobalStyles = () => (
   <style>{`
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --cream: #f0f2eb;
       --dark:  #1b3312;
@@ -20,8 +15,6 @@ const GlobalStyles = () => (
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans:  'Montserrat', sans-serif;
     }
-
-    html { scroll-behavior: smooth; }
 
     body, #root {
       background: var(--cream);
@@ -245,11 +238,11 @@ const Preloader = ({ onOpen, bride, groom }) => (
         <div style={{ marginTop: 20 }}>
           <div style={{ fontFamily: "var(--serif)", fontSize: 22, letterSpacing: ".3em",
             textTransform: "uppercase", color: "#f0f2eb" }}>
-            {bride} &amp; {groom}
+            {groom} &amp; {bride}
           </div>
           <div style={{ fontSize: 9, letterSpacing: ".3em", color: "var(--light)",
             textTransform: "uppercase", marginTop: 6 }}>
-            June 22 · 2026
+            June 13 &amp; 14 · 2026
           </div>
         </div>
         <button onClick={onOpen} className="pulse"
@@ -281,15 +274,10 @@ const Hero = ({ revealed, bride, groom, date }) => {
           justifyContent: "space-between", alignItems: "flex-start", zIndex: 20 }}>
         <div style={{ fontFamily: "var(--serif)", fontSize: 18, fontWeight: 500,
           letterSpacing: ".08em", lineHeight: 1.2, textTransform: "uppercase" }}>
-          {bride.charAt(0)} &amp;<br />{groom.charAt(0)}
+          {groom.charAt(0)} &amp;<br />{bride.charAt(0)}
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, auto)",
           gap: "8px 32px", alignItems: "center" }}>
-          {[["HOME","#home"],["COUPLE","#couple"],["WEDDING BLOG","#blog"],
-            ["OUR STORY","#story"],["OUR EVENTS","#events"],["RSVP","#rsvp"]]
-            .map(([label, href]) => (
-              <a key={label} href={href} className="nav-link">{label}</a>
-            ))}
         </div>
       </nav>
 
@@ -314,31 +302,27 @@ const Hero = ({ revealed, bride, groom, date }) => {
           {/* Monogram oval */}
           <div className="monogram" style={{ marginBottom: 28 }}>
             <span style={{ fontFamily: "var(--serif)", fontSize: 18, letterSpacing: ".1em", lineHeight: 1 }}>
-              {bride.charAt(0)}<sub style={{ fontSize: 9, fontFamily: "var(--sans)", position: "relative", left: -1, top: 3 }}>{groom.charAt(0)}</sub>
+              {groom.charAt(0)}<sub style={{ fontSize: 9, fontFamily: "var(--sans)", position: "relative", left: -1, top: 3 }}>{bride.charAt(0)}</sub>
             </span>
           </div>
 
           <h1 style={{ fontFamily: "var(--serif)", fontSize: "clamp(3.5rem,8vw,7rem)",
             fontWeight: 400, textTransform: "uppercase", lineHeight: .9,
             letterSpacing: ".02em", color: "var(--dark)", marginBottom: 32 }}>
-            {bride} &amp;<br />{groom}
+            {groom} &amp;<br />{bride}
           </h1>
 
           <div style={{ display: "flex", flexDirection: "column",
             alignItems: "center", gap: 4, marginBottom: 32 }}>
             <span style={{ fontFamily: "var(--serif)", fontSize: 20,
               letterSpacing: ".18em", fontWeight: 300 }}>
-              {date.toLocaleDateString("en-US", { day: "numeric", month: "long" }).toUpperCase()}
+              JUNE 13 & 14
             </span>
             <span style={{ fontSize: 9, letterSpacing: ".3em",
               color: "var(--mid)", textTransform: "uppercase" }}>
-              {date.getFullYear()}, {date.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase()}
+              2026
             </span>
           </div>
-
-          <OvalBtn onClick={() => document.getElementById("rsvp").scrollIntoView({ behavior: "smooth" })}>
-            RSVP Now
-          </OvalBtn>
         </div>
 
         {/* Right image */}
@@ -360,6 +344,13 @@ const Hero = ({ revealed, bride, groom, date }) => {
 /* ─── SECTION: Dark hero banner (photo fan) ─────────────────── */
 const DarkBanner = ({ bride, groom, date, location }) => {
   const [ref, visible] = useReveal();
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
+
   const photos = [
     { url: "https://images.unsplash.com/photo-1595814432286-751bbf7e2d5a?q=80&w=400", rot: -22, delay: 0 },
     { url: "https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=400", rot: -11, delay: .1 },
@@ -376,7 +367,7 @@ const DarkBanner = ({ bride, groom, date, location }) => {
         <div className="monogram-lg">
           <span style={{ fontFamily: "var(--serif)", fontSize: 24, color: "#f0f2eb",
             letterSpacing: ".15em" }}>
-            {bride.charAt(0)}<sub style={{ fontSize: 11, fontFamily: "var(--sans)", position: "relative", left: -1 }}>{groom.charAt(0)}</sub>
+            {groom.charAt(0)}<sub style={{ fontSize: 11, fontFamily: "var(--sans)", position: "relative", left: -1 }}>{bride.charAt(0)}</sub>
           </span>
         </div>
       </div>
@@ -390,7 +381,7 @@ const DarkBanner = ({ bride, groom, date, location }) => {
         <h2 style={{ fontFamily: "var(--serif)", fontSize: "clamp(3rem,8vw,6.5rem)",
           fontWeight: 400, color: "var(--accent)", textTransform: "uppercase",
           lineHeight: .88, letterSpacing: ".01em" }}>
-          {bride} &amp;<br />{groom}
+          {groom} &amp;<br />{bride}
         </h2>
         <div style={{ marginTop: 28, fontFamily: "var(--sans)", fontSize: 12,
           letterSpacing: ".15em", color: "rgba(240,242,235,.5)" }}>
@@ -399,7 +390,7 @@ const DarkBanner = ({ bride, groom, date, location }) => {
       </div>
 
       {/* Fan of photos */}
-      <div style={{ position: "relative", height: 380, marginTop: 40 }}>
+      <motion.div ref={containerRef} style={{ position: "relative", height: 380, marginTop: 40, y }}>
         {photos.map((p, i) => (
           <motion.div key={i} className="fan-photo"
             initial={{ y: 80, rotate: 0 }}
@@ -416,7 +407,7 @@ const DarkBanner = ({ bride, groom, date, location }) => {
                 objectFit: "cover", display: "block", filter: "grayscale(1)" }} />
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };
@@ -454,7 +445,7 @@ const MeetCouple = ({ bride, groom }) => {
             <p style={{ fontFamily: "var(--sans)", fontSize: 12, lineHeight: 1.8,
               color: "rgba(240,242,235,.65)", fontWeight: 300, marginBottom: 20 }}>
               An adventure seeker with a kind heart and endless optimism.
-              Michael is grateful every day for the love they share.
+              {groom} is grateful every day for the love they share.
             </p>
             <div style={{ fontFamily: "var(--sans)", fontSize: 11, fontWeight: 500,
               letterSpacing: ".2em", textTransform: "uppercase", color: "#f0f2eb" }}>
@@ -463,8 +454,6 @@ const MeetCouple = ({ bride, groom }) => {
             <div style={{ fontSize: 9, letterSpacing: ".2em", color: "var(--light)",
               marginTop: 4, textTransform: "uppercase" }}>Groom</div>
           </div>
-        </div>
-
         {/* Quote */}
         <div style={{ textAlign: "center", marginBottom: 56, borderTop: "1px solid rgba(255,255,255,.08)",
           paddingTop: 48 }}>
@@ -506,6 +495,7 @@ const MeetCouple = ({ bride, groom }) => {
           ))}
         </div>
       </div>
+    </div>
     </section>
   );
 };
@@ -513,6 +503,13 @@ const MeetCouple = ({ bride, groom }) => {
 /* ─── SECTION: Our Journey ──────────────────────────────────── */
 const OurJourney = () => {
   const [ref, visible] = useReveal();
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+
   return (
     <section id="story" ref={ref} style={{ background: "var(--cream)",
       padding: "100px 48px 80px", textAlign: "center", overflow: "hidden" }}>
@@ -526,20 +523,18 @@ const OurJourney = () => {
         </h2>
 
         {/* Story image */}
-        <div style={{ maxWidth: 580, margin: "0 auto", overflow: "hidden",
-          border: "1px solid rgba(27,51,18,.08)" }}>
+        <div ref={containerRef} style={{ maxWidth: 580, margin: "0 auto", overflow: "hidden",
+          border: "1px solid rgba(27,51,18,.08)", position: "relative", aspectRatio: "16/9" }}>
           <motion.img 
-            initial={{ scale: 1.1, y: 30 }}
-            whileInView={{ scale: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             transition={{ duration: 1.5, ease: 'easeOut' }}
             viewport={{ once: true, amount: 0.2 }}
             src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=900"
             alt="Couple story"
-            style={{ width: "100%", aspectRatio: "16/9", objectFit: "cover",
-              filter: "grayscale(.3)", display: "block",
-              transition: "transform .7s ease" }}
-            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
-            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"} />
+            style={{ width: "100%", height: "140%", position: "absolute", top: "-20%", left: 0,
+              objectFit: "cover", filter: "grayscale(.3)", display: "block", y }}
+          />
         </div>
       </div>
     </section>
@@ -550,24 +545,18 @@ const OurJourney = () => {
 const Timeline = () => {
   const [ref, visible] = useReveal();
   const items = [
-    { time: "4:00 PM", title: "CEREMONY BEGINS",
-      desc: "Please arrive 15 minutes early to be seated comfortably.",
-      icon: <CeremonyIcon /> },
-    { time: "5:00 PM", title: "COCKTAIL HOUR",
-      desc: "Enjoy drinks and light bites while we take photos.",
-      icon: <CocktailIcon /> },
-    { time: "6:30 PM", title: "RECEPTION",
-      desc: "Dinner is served, followed by toasts and celebration.",
+    { time: "13 Juin · 8:00 PM", title: "Dinner",
+      desc: "Salle des Fêtes Tiouti",
       icon: <DinnerIcon /> },
-    { time: "8:00 PM", title: "CELEBRATION",
-      desc: "Join us on the dance floor as the party continues.",
-      icon: <CelebrationIcon /> },
+    { time: "14 Juin · 1:00 PM", title: "Lunch",
+      desc: "Grandzilla Place",
+      icon: <CocktailIcon /> },
   ];
   return (
     <section ref={ref} style={{ background: "var(--cream)", padding: "0 48px 80px" }}>
       <div className={`section-reveal ${visible ? "section-visible" : ""}`}>
         <div className="timeline-grid"
-          style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 2 }}>
+          style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 2 }}>
           {items.map((item, i) => (
             <div key={i} className="timeline-card">
               <div style={{ fontFamily: "var(--serif)", fontSize: "clamp(1.8rem,3.5vw,2.8rem)",
@@ -637,70 +626,90 @@ const CelebrationIcon = () => (
   </svg>
 );
 
-/* ─── SECTION: Events (GSAP Pinned Stack) ───────────────────── */
-const Events = ({ date, venue, location }) => {
-  const containerRef = useRef(null);
+const EventCard = ({ c, i }) => {
+  const imgRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: imgRef,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
+  return (
+    <div className="event-card-sticky"
+      style={{ 
+        position: "sticky", 
+        top: 100 + (i * 40),
+        marginBottom: 40,
+        width: "100%", 
+        height: "70vh",
+        minHeight: 450,
+        maxHeight: 700,
+        background: "var(--cream)", 
+        boxShadow: "0 -15px 40px rgba(27,51,18,0.08)",
+        borderRadius: "16px",
+        overflow: "hidden",
+        border: "1px solid rgba(27,51,18,.05)",
+        display: "grid", 
+        gridTemplateColumns: "1fr 1fr",
+        zIndex: 10 + i
+      }}>
+
+      {/* Image with internal parallax */}
+      <div ref={imgRef} className="event-img-wrap" style={{ order: c.imgRight ? 2 : 1, height: "100%", position: "relative", overflow: "hidden" }}>
+        <motion.img src={c.img} alt={c.subtitle} style={{ width: "100%", height: "130%", position: "absolute", top: "-15%", left: 0, objectFit: "cover", y }} />
+      </div>
+
+      {/* Text */}
+      <div style={{ order: c.imgRight ? 1 : 2, height: "100%",
+        padding: "48px clamp(24px, 5vw, 60px)", display: "flex", flexDirection: "column",
+        justifyContent: "center", background: "var(--cream)" }}>
+        {c.label && (
+          <div style={{ fontSize: 9, letterSpacing: ".3em", color: "var(--mid)",
+            textTransform: "uppercase", marginBottom: 8 }}>{c.label}</div>
+        )}
+        <div style={{ fontFamily: "var(--serif)",
+          fontSize: "clamp(2.5rem,5vw,4.5rem)", fontWeight: 400,
+          textTransform: "uppercase", letterSpacing: ".02em",
+          color: "var(--dark)", lineHeight: 1, marginBottom: 16 }}>
+          {c.title}
+        </div>
+        <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".25em",
+          textTransform: "uppercase", color: "var(--dark)", marginBottom: 8 }}>
+          {c.subtitle}
+        </div>
+        <div style={{ fontSize: 12, fontWeight: 300, color: "var(--mid)",
+          lineHeight: 1.7, maxWidth: 320 }}>
+          {c.desc}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─── SECTION: Events (CSS Sticky) ──────────────────────────── */
+const Events = ({ date, venue, location }) => {
   const cards = [
     {
       img: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=700",
-      label: `${date.getFullYear()}, ${date.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase()}`,
-      title: date.toLocaleDateString("en-US", { day: "numeric", month: "long" }).toUpperCase(),
-      subtitle: "WEDDING CEREMONY",
-      desc: `${venue}, ${location}`,
+      label: "SATURDAY",
+      title: "13 JUIN",
+      subtitle: "DINNER · 8:00 PM",
+      desc: "Salle des Fêtes Tiouti",
       imgRight: false,
-      z: 10,
     },
     {
       img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=700",
-      label: venue.toUpperCase(),
-      title: "5:30 PM",
-      subtitle: "WEDDING RECEPTION",
-      desc: "Dinner, music, and dancing to follow the ceremony.",
+      label: "SUNDAY",
+      title: "14 JUIN",
+      subtitle: "LUNCH · 1:00 PM",
+      desc: "Grandzilla Place",
       imgRight: true,
-      z: 20,
-    },
-    {
-      img: "https://images.unsplash.com/photo-1584395630827-860eee694d7b?q=80&w=700",
-      label: "",
-      title: "DRESS CODE",
-      subtitle: "EVENING FORMAL",
-      desc: "We invite you to dress in elegant evening attire and celebrate with us in style.",
-      imgRight: false,
-      z: 30,
     },
   ];
 
-  useGSAP(() => {
-    const cardElements = gsap.utils.toArray(".gsap-event-card");
-    if (cardElements.length === 0) return;
-
-    // We pin the container, and scrub-animate the cards up
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: `+=${cardElements.length * 100}%`,
-        scrub: 1,
-        pin: true,
-      }
-    });
-
-    cardElements.forEach((card, i) => {
-      if (i > 0) {
-        gsap.set(card, { yPercent: 100 }); // start fully off-screen bottom
-        tl.to(card, {
-          yPercent: 0, // completely overlap the previous card
-          duration: 1,
-          ease: "none"
-        });
-      }
-    });
-  }, { scope: containerRef });
-
   return (
-    <div style={{ background: "var(--cream)" }}>
-      {/* Header Section - completely separate from the pinned cards */}
+    <div style={{ background: "var(--cream)", paddingBottom: 100 }}>
+      {/* Header Section */}
       <section style={{ padding: "100px 24px 60px", textAlign: "center", maxWidth: 780, margin: "0 auto" }}>
         <div style={{ fontSize: 9, letterSpacing: ".4em", color: "var(--mid)",
           textTransform: "uppercase", marginBottom: 20 }}>THE BIG DAY</div>
@@ -711,54 +720,10 @@ const Events = ({ date, venue, location }) => {
         </h2>
       </section>
 
-      {/* Stacked event cards Section - Pinned and 100vh */}
-      <section id="events" ref={containerRef}
-        style={{ height: "100vh", width: "100%", overflow: "hidden", position: "relative" }}>
-        
+      {/* Stacked event cards Section - CSS Sticky */}
+      <section id="events" style={{ position: "relative", maxWidth: 1100, margin: "0 auto", padding: "0 24px" }}>
         {cards.map((c, i) => (
-          <div key={i} className="gsap-event-card"
-            style={{ 
-              position: "absolute", top: 0, left: 0, width: "100%", height: "100%",
-              zIndex: c.z, background: "var(--cream)", 
-              boxShadow: i > 0 ? "0 -20px 50px rgba(27,51,18,0.15)" : "none",
-              borderTop: i > 0 ? "1px solid rgba(27,51,18,.05)" : "none",
-              display: "grid", gridTemplateColumns: "1fr 1fr" 
-            }}>
-
-            {/* Image */}
-            <div className="event-img-wrap" style={{ order: c.imgRight ? 2 : 1, height: "100%" }}>
-              <img src={c.img} alt={c.subtitle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            </div>
-
-            {/* Text */}
-            <div style={{ order: c.imgRight ? 1 : 2, height: "100%",
-              padding: "48px clamp(24px, 5vw, 60px)", display: "flex", flexDirection: "column",
-              justifyContent: "center", background: "var(--cream)" }}>
-              {c.label && (
-                <div style={{ fontSize: 9, letterSpacing: ".3em", color: "var(--mid)",
-                  textTransform: "uppercase", marginBottom: 8 }}>{c.label}</div>
-              )}
-              <div style={{ fontFamily: "var(--serif)",
-                fontSize: "clamp(2.5rem,5vw,4.5rem)", fontWeight: 400,
-                textTransform: "uppercase", letterSpacing: ".02em",
-                color: "var(--dark)", lineHeight: 1, marginBottom: 16 }}>
-                {c.title}
-              </div>
-              <div style={{ fontSize: 10, fontWeight: 500, letterSpacing: ".25em",
-                textTransform: "uppercase", color: "var(--dark)", marginBottom: 8 }}>
-                {c.subtitle}
-              </div>
-              <div style={{ fontSize: 12, fontWeight: 300, color: "var(--mid)",
-                lineHeight: 1.7, maxWidth: 320, marginBottom: 32 }}>
-                {c.desc}
-              </div>
-              <div>
-                <OvalBtn onClick={() => document.getElementById("rsvp").scrollIntoView({ behavior: "smooth" })}>
-                  RSVP Now
-                </OvalBtn>
-              </div>
-            </div>
-          </div>
+          <EventCard key={i} c={c} i={i} />
         ))}
       </section>
     </div>
@@ -842,7 +807,7 @@ const Countdown = ({ date, bride, groom, hashtag, location }) => {
 
         {/* Scroll up button */}
         <div style={{ display: "flex", justifyContent: "center", marginBottom: 48 }}>
-          <OvalBtn onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <OvalBtn>
             SCROLL UP
           </OvalBtn>
         </div>
@@ -905,12 +870,12 @@ const Countdown = ({ date, bride, groom, hashtag, location }) => {
 export default function WeddingInvitation({ guest, event }) {
   const [revealed, setRevealed] = useState(false);
   
-  const bride = event?.bride_name || "";
-  const groom = event?.groom_name || "Mohammed Kendousi";
-  const eventDate = useMemo(() => event?.event_date ? new Date(event.event_date) : new Date("2026-06-22T16:00:00"), [event?.event_date]);
-  const venue = "Salle des fêtes Tahri Mohammed University ";
-  const location = "Béchar";
-  const hashtag = `#${bride.toUpperCase()}AND${groom.toUpperCase()}`;
+  const groom = "Mohamed";
+  const bride = "Mme Kendousi";
+  const eventDate = useMemo(() => event?.event_date ? new Date(event.event_date) : new Date("2026-06-13T20:00:00"), [event?.event_date]);
+  const venue = "Salle des Fêtes Tiouti";
+  const location = "Tiouti";
+  const hashtag = `#${groom.toUpperCase()}AND${bride.toUpperCase()}`;
 
   const handleOpen = () => {
     const cl = document.getElementById("cl");
