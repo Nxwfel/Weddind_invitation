@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import LeftImage from "../assets/wedding.webp";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -35,8 +36,8 @@ const GlobalStyles = () => (
     }
     .curtain-left  { left: 0;  display:flex; align-items:center; justify-content:flex-end; }
     .curtain-right { right: 0; }
-    .curtain-left.open  { transform: translateX(-100%); }
-    .curtain-right.open { transform: translateX(100%); }
+    .curtain-left.open  { transform: translateX(-200%); }
+    .curtain-right.open { transform: translateX(200%); }
 
     .curtain-content {
       position: absolute; right: 0; transform: translateX(50%);
@@ -289,7 +290,7 @@ const Hero = ({ revealed, bride, groom, date }) => {
         <motion.div className="hero-cols" style={{ y: leftY }}>
           <div className="hero-img-wrap" style={{ aspectRatio: "4/5", width: "100%" }}>
             <img className="hero-img"
-              src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600"
+              src={LeftImage}
               alt="Ring" />
           </div>
         </motion.div>
