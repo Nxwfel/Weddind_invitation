@@ -547,7 +547,7 @@ const Timeline = () => {
   const [ref, visible] = useReveal();
   const items = [
     { time: "13 Juin · 8:00 PM", title: "Dinner",
-      desc: "Salle des Fêtes Tiouti",
+      desc: "Grandzilla Place",
       icon: <DinnerIcon /> },
     { time: "14 Juin · 1:00 PM", title: "Lunch",
       desc: "Grandzilla Place",
@@ -695,7 +695,7 @@ const Events = ({ date, venue, location }) => {
       label: "SATURDAY",
       title: "13 JUIN",
       subtitle: "DINNER · 8:00 PM",
-      desc: "Salle des Fêtes Tiouti",
+      desc: "Grandzilla Place",
       imgRight: false,
     },
     {
@@ -872,9 +872,9 @@ export default function WeddingInvitation({ guest, event }) {
   const [revealed, setRevealed] = useState(false);
   
   const groom = "Mohamed";
-  const bride = "Mme Kendousi";
+  const bride = "Mme Kendoussi";
   const eventDate = useMemo(() => event?.event_date ? new Date(event.event_date) : new Date("2026-06-13T20:00:00"), [event?.event_date]);
-  const venue = "Salle des Fêtes Tiouti";
+  const venue = "Grandzilla Place";
   const location = "Tiouti";
   const hashtag = `#${groom.toUpperCase()}AND${bride.toUpperCase()}`;
 
