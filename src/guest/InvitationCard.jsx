@@ -875,7 +875,7 @@ export default function WeddingInvitation({ guest, event }) {
   const bride = "Mme Kendoussi";
   const eventDate = useMemo(() => event?.event_date ? new Date(event.event_date) : new Date("2026-06-13T20:00:00"), [event?.event_date]);
   const venue = "Grandzilla Place";
-  const location = "Tiouti";
+  const location = "Granzilla";
   const hashtag = `#${groom.toUpperCase()}AND${bride.toUpperCase()}`;
 
   const handleOpen = () => {
